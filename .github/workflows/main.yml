@@ -1,0 +1,34 @@
+name: 20-Minute Gemini Code Improver
+
+on:
+  schedule:
+    - cron: '*/20 * * * *'
+  workflow_dispatch:
+
+jobs:
+  run-gemini-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Grab code from repository
+        uses: actions/checkout@v4
+      
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          
+      - name: Install Gemini Library
+        run: pip install google-generativeai
+        
+      - name: Run Automation Script
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python auto_improve.py
+        
+      - name: Save new code back to GitHub
+        run: |
+          git config --global user.name 'GitHub Automation'
+          git config --global user.email 'action@github.com'
+          git add my_script.py
+          git commit -m "Auto-improved code via Gemini" || exit 0
+          git push
