@@ -29,6 +29,6 @@ jobs:
         run: |
           git config --global user.name 'GitHub Automation'
           git config --global user.email 'action@github.com'
-          git add my_script.py
+          git add .
           git commit -m "Auto-improved code via Gemini" || exit 0
           git push
