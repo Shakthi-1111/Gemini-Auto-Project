@@ -1,6 +1,8 @@
 name: 20-Minute Gemini Code Improver
 
 on:
+  push:
+    branches: [ main ]
   schedule:
     - cron: '*/20 * * * *'
   workflow_dispatch:
@@ -8,6 +10,8 @@ on:
 jobs:
   run-gemini-script:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Grab code from repository
         uses: actions/checkout@v4
